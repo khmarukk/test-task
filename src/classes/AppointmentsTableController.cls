@@ -2,6 +2,10 @@ public with sharing class AppointmentsTableController {
     public Datetime appointmentDate { get; set; }
     public Integer durationInMinutes { get; set; }
     public Integer size { get {return 20;} set; }
+    public Id selectedPatient { get; set; }
+    public Id selectedDoctor { get; set; }
+    public List<Doctor__c> doctors { get; set; }
+    public List<Patient__c> patients { get; set; }
 
     public ApexPages.StandardSetController setCtrl {
         get {
@@ -18,7 +22,6 @@ public with sharing class AppointmentsTableController {
         set;
     }
 
-    public List<Doctor__c> doctors { get; set; }
     public List<SelectOption> doctorOptions {
         get {
             List<SelectOption> options = new List<SelectOption>();
@@ -33,7 +36,7 @@ public with sharing class AppointmentsTableController {
         }
         set;
     }
-    public Id selectedDoctor { get; set; }
+
     public Doctor__c doctor {
         get {
             if (doctor == null) {
@@ -54,7 +57,6 @@ public with sharing class AppointmentsTableController {
         set;
     }
 
-    public List<Patient__c> patients { get; set; }
     public List<SelectOption> patientOptions {
         get {
             List<SelectOption> options = new List<SelectOption>();
@@ -79,7 +81,6 @@ public with sharing class AppointmentsTableController {
         }
         set;
     }
-    public String selectedPatient { get; set; }
 
     public void onDoctorChange() {
         workingHours = true;
