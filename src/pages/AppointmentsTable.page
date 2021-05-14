@@ -1,0 +1,51 @@
+<apex:page id="AppointmentsTable" controller="AppointmentsTableController" docType="html-5.0">
+    <apex:form id="form">
+        <apex:pageBlock title="Appointments Table" id="page-block">
+            <apex:pageBlockSection title="Select a doctor: " showHeader="false" columns="2">
+                <apex:selectList value="{!selectedDoctor}" label="Select a doctor:" size="1">
+                    <apex:selectOptions value="{!doctorOptions}"/>
+                    <apex:actionSupport event="onchange" action="{!onDoctorChange}" reRender="page-block"/>
+                </apex:selectList>
+                <apex:commandButton value="Add New Doctor" action="{!createDoctor}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection showHeader="false" title="Working hours" columns="1" rendered="{!workingHours}"
+                                   id="working-hours">
+                <apex:outputField label="Working Hours Start" value="{!doctor.Working_Hours_Start__c}"/>
+                <apex:outputField label="Working Hours End" value="{!doctor.Working_Hours_End__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Select a patient: " showHeader="false" columns="2">
+                <apex:selectList value="{!selectedPatient}" label="Select a patient" size="1">
+                    <apex:selectOptions value="{!patientOptions}"/>
+                    <apex:actionSupport event="onchange" action="{!onPatientChange}"/>
+                </apex:selectList>
+                <apex:commandButton value="Add New Patient" action="{!createPatient}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="appointment-fields">
+                <apex:input type="datetime-local" value="{!appointmentDate}" label="Appointment Date"/>
+                <br/>
+                <apex:input value="{!durationInMinutes}" label="Duration in minutes"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection showHeader="false">
+                <apex:commandButton value="Add new Appointment" action="{!addNewAppointment}" reRender="table">
+                </apex:commandButton>
+            </apex:pageBlockSection>
+            <apex:outputPanel id="table">
+                <apex:pageBlockTable value="{!Appointments}" var="appointment" rows="20">
+                    <apex:column headerValue="Action">
+                        <apex:outputLink value="{!URLFOR($Action.Appointment__c.View, appointment.Id, null, true)}">View
+                        </apex:outputLink>
+                    </apex:column>
+                    <apex:column headerValue="Doctor's Name" value="{!appointment.Doctor__r.Name}"/>
+                    <apex:column headerValue="Patient's Name" value="{!appointment.Patient__r.Name}"/>
+                    <apex:column headerValue="Date" value="{!appointment.Appointment_Date__c}"/>
+                    <apex:column headerValue="Duration" value="{!appointment.Duration_in_minutes__c}"/>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+            <apex:commandButton reRender="page-block,table" value="Previous" action="{!setCtrl.previous}"
+                                title="Previous Page" disabled="{!!setCtrl.hasPrevious}"/>
+            <apex:commandButton reRender="page-block,table" value="Next" action="{!setCtrl.next}"
+                                title="Next Page" disabled="{!!setCtrl.hasNext}"/>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

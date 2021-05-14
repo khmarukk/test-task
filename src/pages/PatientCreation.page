@@ -1,0 +1,12 @@
+<apex:page id="PatientCreation" standardController="Patient__c" docType="html-5.0">
+    <apex:form>
+        <apex:pageBlock title="Create New Patient">
+            <apex:pageBlockSection showHeader="false">
+                <apex:inputField required="true" label="Name" value="{!Patient__c.Name}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection showHeader="false">
+                <apex:commandButton value="Create a patient" action="{!save}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
